@@ -1,0 +1,61 @@
+[
+    {
+        "project_name": "Test123",
+        "customers_country": "Regina",
+        "project_type": "reversing",
+        "number_of_devs": 12.0,
+        "number_of_qas": 3.0,
+        "project_duration": 13.0
+    },
+    {
+        "project_name": "Retard",
+        "customers_country": "France",
+        "project_type": "web-dev",
+        "number_of_devs": 17.0,
+        "number_of_qas": 3.0,
+        "project_duration": 21.0
+    },
+    {
+        "project_name": "Beritto4",
+        "customers_country": "France",
+        "project_type": "web-dev",
+        "number_of_devs": 32.0,
+        "number_of_qas": 3.0,
+        "project_duration": 48.0
+    },
+    {
+    "project_name": "Qertyo00",
+    "customers_country": "Hungary",
+    "project_type": "python",
+    "number_of_devs": 23.0,
+    "number_of_qas": 5.0,
+    "project_duration": 55.0
+},{
+    "project_name": "asfa serasgra4r",
+    "customers_country": "sfasdfaw4ta",
+    "project_type": "asdasr4",
+    "number_of_devs": 23.0,
+    "number_of_qas": 23.0,
+    "project_duration": 1.0
+},{
+    "project_name": "Feasedr",
+    "customers_country": "Germany",
+    "project_type": "web-dev",
+    "number_of_devs": 23.0,
+    "number_of_qas": 5.0,
+    "project_duration": 45.0
+},{
+    "project_name": "Stepaan33",
+    "customers_country": "Tansania",
+    "project_type": "Reversing",
+    "number_of_devs": 3.0,
+    "number_of_qas": 1.0,
+    "project_duration": 34.0
+},{
+    "project_name": "Test32-Faans",
+    "customers_country": "Optima",
+    "project_type": "dlp",
+    "number_of_devs": 43.0,
+    "number_of_qas": 9.0,
+    "project_duration": 90.0
+}]

@@ -2,21 +2,28 @@ import random
 from homework4 import Project, str_input_validation, num_input_validation, quit_program
 
 class SubProject(Project):
-    def __init__(self, project_name, customers_country, project_type, number_of_devs, number_of_qas, project_duration, parent_project, dev_manager_price_per_month,        qa_manager_price_per_month ):
-        super().__init__(project_name, customers_country, project_type, number_of_devs, number_of_qas, project_duration)
+    def __init__(self, projectName, customersCountry, projectType, numberOfDevs, numberOfQas, projectDuration, parentProject, devManagerPricePerMonth, qaManagerPricePerMonth ):
+        super().__init__(projectName, customersCountry, projectType, numberOfDevs, numberOfQas, projectDuration)
 
-        self.parent_project = parent_project
-        self.dev_manager_price_per_month = dev_manager_price_per_month
-        self.qa_manager_price_per_month = qa_manager_price_per_month
+        self.parent_project = parentProject
+        self.dev_manager_price_per_month = devManagerPricePerMonth
+        self.qa_manager_price_per_month = qaManagerPricePerMonth
 
     def show_project_info(self):
         return f"Parrent project: {self.parent_project}\n" + super().show_project_info()
     
     def devs_price_per_month(self):
-        return super().devs_price_per_month()+self.dev_manager_price_per_month
+        if self.number_of_devs != 0:
+            return super().devs_price_per_month()+self.dev_manager_price_per_month
+        else:
+            return 0
     
     def qas_price_per_month(self):
-        return super().qas_price_per_month()+self.qa_manager_price_per_month    
+        if self.number_of_qas != 0:
+            return super().qas_price_per_month()+self.qa_manager_price_per_month    
+        else:
+            return 0
+        
     
     def dev_qa_managers_info(self):
         managers = [
@@ -41,92 +48,55 @@ class SubProject(Project):
             "Anthony Green",
             "Laura Carter"
         ]
-        return f"Our dev manager {random.choice(managers)} is better then the dev manager {random.choice(managers)} of {self.parent_project}\nOur QA manager {random.choice(managers)} is better then the QA manager {random.choice(managers)} of {self.parent_project}!"
+        if self.number_of_devs >0 and self.number_of_qas > 0:
+            return f"Our dev manager {random.choice(managers)} is better then the dev manager {random.choice(managers)} of {self.parent_project}!\nOur QA manager {random.choice(managers)} is better then the QA manager {random.choice(managers)} of {self.parent_project}!"
+        elif self.number_of_devs == 0:
+            return f"Our QA manager {random.choice(managers)} is better then the QA manager {random.choice(managers)} of {self.parent_project}!"
+        elif self.number_of_qas == 0:
+            return f"Our dev manager {random.choice(managers)} is better then the dev manager {random.choice(managers)} of {self.parent_project}!\n"
+
+
 
     
 if __name__ == "__main__":
-    '''
-    #test data
-    project_name = "Fabula"
-    customer = "Ferodir LTD"
-    customers_country = "Argentina"
-    project_type = "reversing"
-    number_of_devs = 3
-    number_of_qas = 1
-    project_duration = 4
-
-    parrent_prj = Project(project_name, customer, customers_country, project_duration, number_of_devs, number_of_qas, project_duration)
-    sub_prj_test = SubProject(
-        "Reborit",
-        "Perru",
-        "development",
-        2,
-        1,
-        5,
-        "",
-        12000,
-        7500
-        )
-    print(isinstance(sub_prj_test, Project))
-    print(isinstance(sub_prj_test, SubProject))
-
-    print(f"Parrent: {parrent_prj.project_name}")
-    print(f"SubPrj: {sub_prj_test.project_name}")
-    '''
 
     ###     
     #take project data from user
-    project_name = "None"
-    customer = "None"
-    customers_country = "None"
-    project_type = "None"
-    number_of_devs = 0
-    number_of_qas = 0
-    project_duration = 0
-    parrent_prj = "None"
-    dev_manager_price_per_month = 0
-    qa_manager_price_per_month = 0
-    
-
-    
     print("Type necessary project info:")
 
     print("Project name:\n>>", end=" ")
-    project_name = str_input_validation()
-    print("Customer:\n", end=" ")
-    customer = str_input_validation()
+    ui_project_name = str_input_validation()
     print("Customers_country:\n", end=" ")
-    customers_country = str_input_validation()
+    ui_customers_country = str_input_validation()
     print("Project type:\n>>", end=" ")
-    project_type = str_input_validation()
+    ui_project_type = str_input_validation()
 
     print("Numbers of DEVs:\n>>", end=" ")
-    number_of_devs = num_input_validation()
+    ui_number_of_devs = num_input_validation()
     print("Numbers of QAs\n>>", end=" ")
-    number_of_qas = num_input_validation()
+    ui_number_of_qas = num_input_validation()
     print("Project duration (in months)\n>>", end=" ")
-    project_duration = num_input_validation()
+    ui_project_duration = num_input_validation()
 
     print("Parrent project name:\n>>", end=" ")
-    project_duration = str_input_validation()
+    ui_parrent_prj = str_input_validation()
     print("DEV Manager salary\n>>", end=" ")
-    project_duration = num_input_validation()
+    ui_dev_manager_price_per_month = num_input_validation()
     print("QA Manager salary\n>>", end=" ")
-    project_duration = num_input_validation()
+    ui_qa_manager_price_per_month = num_input_validation()
 
 
     # Project class init
-    project = SubProject(
-        project_name = project_name,
-        customer = customer,
-        customers_country = customers_country,
-        project_type = project_type,
-        number_of_devs = number_of_devs,
-        number_of_qas = number_of_qas,
-        project_duration = project_duration,
-        parent_project= parrent_prj,
-        dev_manager_price_per_month= dev_manager_price_per_month,
-        qa_manager_price_per_month= qa_manager_price_per_month
+    sub_project = SubProject(
+        projectName = ui_project_name,
+        customersCountry = ui_customers_country,
+        projectType = ui_project_type,
+        numberOfDevs = ui_number_of_devs,
+        numberOfQas= ui_number_of_qas,
+        projectDuration= ui_project_duration,
+        parentProject= ui_parrent_prj,
+        devManagerPricePerMonth= ui_dev_manager_price_per_month,
+        qaManagerPricePerMonth= ui_qa_manager_price_per_month
         )
     
     #Menu processing
@@ -136,18 +106,21 @@ if __name__ == "__main__":
         print("b: DEVs price per month")
         print("c: QAs price per month")
         print("d: DEVs+QAs price per year")
+        print("e: Secret about our manager(s)")
         print("q: Quit")
 
         choice = input("\n\nEnter your choice: ").lower()
 
         if choice == "a":
-            print(project.show_project_info())
+            print(sub_project.show_project_info())
         elif choice == "b":
-            print(project.devs_price_per_month())
+            print(sub_project.devs_price_per_month())
         elif choice == "c":
-            print(project.qas_price_per_month())
+            print(sub_project.qas_price_per_month())
         elif choice == "d":
-            print(project.full_price_per_year())
+            print(sub_project.full_price())
+        elif choice == "e":
+            print(sub_project.dev_qa_managers_info())
         elif choice == "q":
             quit_program()
         else:

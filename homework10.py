@@ -40,7 +40,6 @@ def create_tables(connection):
             CREATE TABLE IF NOT EXISTS projects (
                 project_id serial PRIMARY KEY,
                 project_name VARCHAR(50) UNIQUE NOT NULL,
-                customer VARCHAR(50),
                 customers_country VARCHAR(50),
                 project_type VARCHAR(50),
                 number_of_devs FLOAT,
@@ -73,16 +72,15 @@ def insert_project(connection, data):
     with connection.cursor() as cursor:
         cursor.execute("""INSERT INTO projects (
                     project_name,
-                    customer,
                     customers_country,
                     project_type,
                     number_of_devs,
                     number_of_qas,
                     project_duration
                 ) VALUES (
-                    %s, %s, %s, %s, %s, %s, %s
+                    %s, %s, %s, %s, %s, %s
                 )""",
-               (data.project_name, data.customer, data.customers_country, data.project_type, data.number_of_devs, data.number_of_qas, data.project_duration))
+               (data.project_name, data.customers_country, data.project_type, data.number_of_devs, data.number_of_qas, data.project_duration))
 
     connection.commit()
 
@@ -162,9 +160,9 @@ def int_input_validation():
 
     
 if __name__ == "__main__":
-    init_connection = connect_to_db()
-    create_tables(init_connection)
-    init_connection.close()
+    # init_connection = connect_to_db()
+    # create_tables(init_connection)
+    # init_connection.close()
     
     while True:
         user_choise = input("Type:\n\ta - add new Project\n\tb - get project data\n>>").lower()
@@ -175,8 +173,6 @@ if __name__ == "__main__":
 
             print("Project name:\n>>", end=" ")
             u_project_name = str_input_validation()
-            print("Customer:\n>>", end=" ")
-            u_customer = str_input_validation()
             print("Customers_country:\n>>", end=" ")
             u_customers_country = str_input_validation()
             print("Project type:\n>>", end=" ")
@@ -190,13 +186,12 @@ if __name__ == "__main__":
             u_project_duration = num_input_validation()
 
             project_data = Project(
-                project_name = u_project_name,
-                customer = u_customer,
-                customers_country = u_customers_country,
-                project_type = u_project_type,
-                number_of_devs = u_number_of_devs,
-                number_of_qas = u_number_of_qas,
-                project_duration = u_project_duration
+                projectName=u_project_name,
+                customersCountry= u_customers_country,
+                projectType= u_project_type,
+                numberOfDevs= u_number_of_devs,
+                numberOfQas= u_number_of_qas,
+                projectDuration= u_project_duration
             )
             #Connect to DB
             db_connection = connect_to_db()
@@ -212,7 +207,7 @@ if __name__ == "__main__":
                 projectID=project_id,
                 devs_price_per_month=project_data.devs_price_per_month(),
                 qas_price_per_month=project_data.qas_price_per_month(),
-                devs_and_qas_price_per_year=project_data.full_price_per_year(),
+                devs_and_qas_price_per_year=project_data.full_price(),
                 project_info=project_data.show_project_info()
             )
             db_connection.close()

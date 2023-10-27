@@ -58,4 +58,11 @@
     "number_of_devs": 43.0,
     "number_of_qas": 9.0,
     "project_duration": 90.0
+},{
+    "project_name": "asdf",
+    "customers_country": "asdf",
+    "project_type": "asdf",
+    "number_of_devs": 0.0,
+    "number_of_qas": 12.0,
+    "project_duration": 10.0
 }]

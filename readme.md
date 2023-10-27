@@ -1,5 +1,5 @@
 ## Homework 10
 <!-- docker compose up --build -->
-import psycopg2
-
-docker-compose up -d
+- pip install psycopg2
+- docker-compose up -d 
+- run homework10.py

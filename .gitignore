@@ -1,0 +1,6 @@
+# Ignore Docker-related files
+.dockerignore
+Dockerfile
+
+# Ignore Python bytecode files
+__pycache__/*.pyc

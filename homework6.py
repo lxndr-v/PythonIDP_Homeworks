@@ -9,14 +9,14 @@ from bs4 import BeautifulSoup
 
 urllib3.disable_warnings()
 
-def gallery_auth(email, password):
+def gallery_auth(login, password):
     #POST to https://gallery.dev.local/api/authenticate
     headers = {'Content-Type' : "application/json"}
     url = "https://gallery.dev.local/api/authenticate"
 
     # Request payload
     payload = {
-        "login": email,
+        "login": login,
         "password": password,
     }
     # Make the POST request
@@ -60,19 +60,19 @@ if __name__ == "__main__":
         #take credentials from file:
             with open("user_credentials.txt", 'r') as cred_file:
                 credentials = json.load(cred_file)
-            user_email = credentials['email']
+            user_login = credentials['login']
             user_password = credentials['password'] 
 
         elif input_type == "b":
         #take credentials from keyboard: (mask for the password input)
-            user_email = input("Enter your email: ")
+            user_login = input("Enter your login: ")
             user_password = pwinput(prompt="Enter your password: ", mask='')
         elif input_type == "q":
             quit_program()
 
         email_to_search = input("Enter user email to search:\n>>")  
 
-        token = gallery_auth(email=user_email, password=user_password)
+        token = gallery_auth(login=user_login, password=user_password)
         employee_info = find_employee(token=token, target_email=email_to_search)
         if employee_info:
             print("Found the JSON object with the target email:")

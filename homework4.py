@@ -1,29 +1,26 @@
 class Project:
     
-
     price_per_dev = 10000
     price_per_qa = 6000
 
-    def __init__(self, project_name, customers_country, project_type, number_of_devs, number_of_qas, project_duration):
-        self.project_name = project_name
-        self.customers_country = customers_country
-        self.project_type = project_type
-        self.number_of_devs = float(number_of_devs)
-        self.number_of_qas = float(number_of_qas)
-        self.project_duration = float(project_duration)
+    def __init__(self, projectName, customersCountry, projectType, numberOfDevs, numberOfQas, projectDuration):
+        self.project_name = projectName
+        self.customers_country = customersCountry
+        self.project_type = projectType
+        self.number_of_devs = float(numberOfDevs)
+        self.number_of_qas = float(numberOfQas)
+        self.project_duration = float(projectDuration)
         
-
     def devs_price_per_month(self): #- this method calculates the monthly price for all devs on the project. For example the customer pays $10000 every month for one dev.
         return float(self.number_of_devs*self.price_per_dev)
         
     def qas_price_per_month(self): #- this method calculates the monthly price for all QAs the project. For example the customer pays $6000 every month for one QA.
         return float(self.number_of_qas*self.price_per_qa)
 
-    def full_price_per_year(self): #- this method calculated the full (QA + dev) price per year.
-        months = 12
+    def full_price(self): #- this method calculated the full (QA + dev) price per year.
         monthly_price_per_devs = self.devs_price_per_month()
         monthly_price_per_qas = self.qas_price_per_month()
-        return float((monthly_price_per_devs+monthly_price_per_qas)*months)
+        return float((monthly_price_per_devs+monthly_price_per_qas)*self.project_duration)
     
     def show_project_info(self): #- this method generates a string with the project information:
         project_info = ""
@@ -32,24 +29,29 @@ class Project:
             project_info= (
                 f"{self.project_type} project {self.project_name} from {self.customers_country} brings us:\n"
                 +f"\t- {self.devs_price_per_month()+self.qas_price_per_month()} every month\n"
-                +f"\t- {self.full_price_per_year()} every year"
+                +f"\t- Full price: {self.full_price()}"
                 )
         
         elif self.number_of_devs>0 and self.number_of_qas==0:
             project_info =(
                 f"{self.project_type} project {self.project_name} from {self.customers_country} brings us:\n"
                 + f"\t- {self.devs_price_per_month()} per DEVs every month\n"
-                + f"\t- {self.full_price_per_year} every year\n"
+                + f"\t- Full price: {self.full_price()}\n"
                 + "We need to sell them several QAs!"
                 )
 
-        elif self.number_of_devs>0 and self.number_of_qas==0:
+        elif self.number_of_devs==0 and self.number_of_qas>0:
             project_info =(
                 f"{self.project_type} project {self.project_name} from {self.customers_country} brings us:\n"
-                + f"\t- {self.qas_price_per_month()}per QAs every month\n"
-                + f"\t- {self.full_price_per_year} every year\n"
-                + "We need to sell them several devs!"
+                + f"\t- {self.qas_price_per_month()} per QAs every month\n"
+                + f"\t- Full price: {self.full_price()}\n"
+                + "We need to sell them several DEVs!"
                 )
+        elif self.number_of_devs==0 and self.number_of_qas==0:
+                project_info = "Looks like nobody working here!"
+
+        else: 
+            project_info = "This area is restricted! Dragons live here!"
         return project_info
         
 #make sure that user type atleast 1 letter or number
@@ -59,7 +61,7 @@ def str_input_validation():
         return user_input
     else:
         print("Invalid input. Try again...\n>>")
-        str_input_validation()
+        return str_input_validation()
 
 #make sure that only numbers >=0 can be entered
 def num_input_validation():
@@ -74,10 +76,10 @@ def num_input_validation():
             return is_num
         else:
             print("Input must contain only number that is >= 0. Try again, pls...")
-            num_input_validation()
+            return num_input_validation()
     except:
         print("Input must contain only number that is >= 0. Try again, pls ...")
-        num_input_validation()
+        return num_input_validation()
 
 
 def quit_program():
@@ -87,32 +89,31 @@ def quit_program():
 
 if __name__ == "__main__":
     #take project data from user
-    project_name = "None"
-    customers_country = "None"
-    project_type = "None"
-    number_of_devs = 0
-    number_of_qas = 0
-    project_duration = 0
-
-    
     print("Type necessary project info:")
 
     print("Project name:\n>>", end=" ")
-    project_name = str_input_validation()
+    ui_project_name = str_input_validation()
     print("Customers_country:\n", end=" ")
-    customers_country = str_input_validation()
+    ui_customers_country = str_input_validation()
     print("Project type:\n>>", end=" ")
-    project_type = str_input_validation()
+    ui_project_type = str_input_validation()
 
     print("Numbers of DEVs:\n>>", end=" ")
-    number_of_devs = num_input_validation()
+    ui_number_of_devs = num_input_validation()
     print("Numbers of QAs\n>>", end=" ")
-    number_of_qas = num_input_validation()
+    ui_number_of_qas = num_input_validation()
     print("Project duration (in months)\n>>", end=" ")
-    project_duration = num_input_validation()
+    ui_project_duration = num_input_validation()
 
     # Project class init
-    project = Project(project_name, customers_country, project_type, number_of_devs, number_of_qas, project_duration)
+    project = Project(
+        ui_project_name, 
+        ui_customers_country, 
+        ui_project_type, 
+        ui_number_of_devs, 
+        ui_number_of_qas, 
+        ui_project_duration
+        )
 
     #Menu processing
 
@@ -133,7 +134,7 @@ if __name__ == "__main__":
         elif choice == "c":
             print(project.qas_price_per_month())
         elif choice == "d":
-            print(project.full_price_per_year())
+            print(project.full_price())
         elif choice == "q":
             quit_program()
         else:
